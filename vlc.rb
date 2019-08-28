@@ -25,11 +25,13 @@ class Vlc
     res = JSON.parse(rc.get)
     res['children'].each do |k, v|
       if k['name'] == 'Playlist'
-        print "K: #{k} --> #{v}\n"
-        pl=v
+        # print "K: #{k} --> #{v}\n"
+        pl=k['children']
       end
     end
-    pl
+    rpl = []
+    pl.each { |t| rpl << t['name']}
+    rpl
   end
 
   def status
@@ -63,12 +65,16 @@ end
 if $0 == __FILE__
   v=Vlc.new
   v.start
-  sleep(3)
-  print "Status:\n"
-  v.status
+  sleep(1)
+  # print "Status:\n"
+  # v.status
   v.addTrack('/home/rick/Videos/Bully/bully.iso')
+  v.addTrack('/home/rick/Videos/Tim/DSC_0011.mp4')
+  v.addTrack('/home/rick/Videos/Tim/DSC_0026.mp4')
+  v.addTrack('/home/rick/Videos/Tim/DSC_0027.mp4')
+  v.addTrack('/home/rick/Videos/Tim/DSC_0071.mp4')
   print "\nPlaylist:\n"
   p v.playlist
   v.play
-  v.status
+  # v.status
 end
